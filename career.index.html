@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer - Pro Features</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0e27;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(252, 70, 107, 0.3), transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(103, 58, 183, 0.3), transparent 50%);
+            animation: bgPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: float 20s infinite ease-in-out;
+            opacity: 0.6;
+        }
+
+        .orb1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            top: 10%;
+            left: 10%;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            top: 50%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .orb3 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            bottom: 10%;
+            left: 30%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(50px, -80px) rotate(90deg) scale(1.1); }
+            50% { transform: translate(-30px, -150px) rotate(180deg) scale(0.9); }
+            75% { transform: translate(70px, -100px) rotate(270deg) scale(1.05); }
+        }
+
+        .shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.15;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 86px solid #667eea;
+            animation: rotate3d 20s infinite linear;
+        }
+
+        .square {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            animation: morph 15s infinite ease-in-out;
+        }
+
+        .circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            animation: bounce3d 10s infinite;
+        }
+
+        @keyframes rotate3d {
+            0% { transform: rotate(0deg) translateY(0); }
+            50% { transform: rotate(180deg) translateY(-200px); }
+            100% { transform: rotate(360deg) translateY(0); }
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 0%; transform: rotate(0deg) scale(1); }
+            50% { border-radius: 50%; transform: rotate(180deg) scale(1.3); }
+        }
+
+        @keyframes bounce3d {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-300px) scale(1.5); }
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.6), transparent);
+            border-radius: 50%;
+            animation: glowPulse 3s infinite;
+            filter: blur(20px);
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            animation: float-logo 4s infinite ease-in-out;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+            transform-style: preserve-3d;
+        }
+
+        @keyframes float-logo {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(180deg); }
+        }
+
+        h1 {
+            color: white;
+            font-size: 4em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShine 3s infinite;
+        }
+
+        @keyframes textShine {
+            0%, 100% { filter: brightness(1) hue-rotate(0deg); }
+            50% { filter: brightness(1.2) hue-rotate(10deg); }
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.3em;
+            margin-top: 15px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            perspective: 1000px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3),
+                        inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            animation: cardFloat 6s infinite ease-in-out;
+        }
+
+        .card:nth-child(1) { animation-delay: 0s; }
+        .card:nth-child(2) { animation-delay: 3s; }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-15px) rotateX(2deg); }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.7s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-20px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+            box-shadow: 0 30px 60px rgba(102, 126, 234, 0.4),
+                        inset 0 1px 0 rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .upload-area {
+            border: 3px dashed rgba(255,255,255,0.3);
+            border-radius: 25px;
+            padding: 70px 30px;
+            margin: 30px 0;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.3), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .upload-area:hover::before {
+            width: 500px;
+            height: 500px;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .upload-icon {
+            font-size: 100px;
+            animation: iconFloat 3s infinite;
+            filter: drop-shadow(0 10px 20px rgba(102, 126, 234, 0.5));
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotateZ(0deg); }
+            25% { transform: translateY(-20px) rotateZ(-10deg); }
+            75% { transform: translateY(-20px) rotateZ(10deg); }
+        }
+
+        .upload-text {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin: 25px 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .upload-subtext {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5),
+                        inset 0 -3px 0 rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.7),
+                        inset 0 -3px 0 rgba(0,0,0,0.2);
+        }
+
+        .btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            box-shadow: 0 15px 35px rgba(74, 222, 128, 0.5);
+            margin-top: 15px;
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 25px 50px rgba(74, 222, 128, 0.7);
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 30px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideInRight 0.8s backwards;
+        }
+
+        .feature-item:nth-child(1) { animation-delay: 0.2s; }
+        .feature-item:nth-child(2) { animation-delay: 0.4s; }
+        .feature-item:nth-child(3) { animation-delay: 0.6s; }
+        .feature-item:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px) rotateY(-90deg); }
+            to { opacity: 1; transform: translateX(0) rotateY(0deg); }
+        }
+
+        .feature-item:hover {
+            transform: translateX(15px) scale(1.05) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .feature-icon {
+            font-size: 50px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: iconRotate 4s infinite;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        @keyframes iconRotate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) scale(1.1); }
+            75% { transform: rotate(15deg) scale(1.1); }
+        }
+
+        .feature-content h3 {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-content p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.05em;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 60px;
+            color: white;
+        }
+
+        .loading.active { 
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .spinner-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 40px;
+        }
+
+        .spinner {
+            width: 150px;
+            height: 150px;
+            border: 8px solid rgba(255,255,255,0.1);
+            border-top-color: #667eea;
+            border-right-color: #764ba2;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            position: absolute;
+        }
+
+        .spinner-inner {
+            width: 110px;
+            height: 110px;
+            border: 6px solid rgba(255,255,255,0.1);
+            border-bottom-color: #f093fb;
+            border-left-color: #f5576c;
+            border-radius: 50%;
+            animation: spin 1s linear infinite reverse;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .results-section {
+            display: none;
+            grid-column: 1 / -1;
+            margin-top: 50px;
+        }
+
+        .results-section.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .result-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            animation: scaleIn 0.8s backwards;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+
+        .result-card:nth-child(1) { animation-delay: 0.2s; }
+        .result-card:nth-child(2) { animation-delay: 0.4s; }
+        .result-card:nth-child(3) { animation-delay: 0.6s; }
+        .result-card:nth-child(4) { animation-delay: 0.8s; }
+        .result-card:nth-child(5) { animation-delay: 1s; }
+        .result-card:nth-child(6) { animation-delay: 1.2s; }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8) rotateX(-90deg); }
+            to { opacity: 1; transform: scale(1) rotateX(0deg); }
+        }
+
+        .result-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(102, 126, 234, 0.4);
+        }
+
+        .result-card h3 {
+            color: white;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .score-display {
+            font-size: 5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin: 30px 0;
+            animation: countUp 2.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 10px 20px rgba(74, 222, 128, 0.5));
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.3) rotateX(-180deg); }
+            to { opacity: 1; transform: scale(1) rotateX(0deg); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 16px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e, #16a34a);
+            border-radius: 15px;
+            animation: fillProgress 2.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes fillProgress {
+            from { width: 0; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .recommendation-list {
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        .recommendation-list li {
+            color: white;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.15), rgba(34, 197, 94, 0.1));
+            border-radius: 15px;
+            border-left: 5px solid #4ade80;
+            animation: slideInLeft 0.6s backwards;
+            transition: all 0.3s;
+            font-size: 1.05em;
+        }
+
+        .recommendation-list li:hover {
+            transform: translateX(10px);
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.25), rgba(34, 197, 94, 0.2));
+            box-shadow: 0 5px 15px rgba(74, 222, 128, 0.3);
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px) rotateY(-90deg); }
+            to { opacity: 1; transform: translateX(0) rotateY(0deg); }
+        }
+
+        .course-item {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.1));
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid #60a5fa;
+            transition: all 0.3s;
+            animation: slideInLeft 0.6s backwards;
+        }
+
+        .course-item:hover {
+            transform: translateX(10px);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.25), rgba(59, 130, 246, 0.2));
+            box-shadow: 0 5px 15px rgba(96, 165, 250, 0.3);
+        }
+
+        .course-item h4 {
+            color: #60a5fa;
+            font-size: 1.2em;
+            margin-bottom: 8px;
+        }
+
+        .course-item p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .course-item .badge {
+            display: inline-block;
+            background: rgba(96, 165, 250, 0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: #60a5fa;
+            margin-right: 8px;
+        }
+
+        .company-score {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            animation: slideInLeft 0.6s backwards;
+        }
+
+        .company-score:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .company-name {
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .company-score-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .particle-system {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .particle-dot {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: particleFloat 15s infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        @media (max-width: 1200px) {
+            .results-section.active {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 968px) {
+            .main-content { grid-template-columns: 1fr; }
+            h1 { font-size: 2.5em; }
+            .card { padding: 35px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    
+    <div class="shapes">
+        <div class="shape triangle" style="top: 15%; left: 20%;"></div>
+        <div class="shape square" style="top: 40%; right: 15%;"></div>
+        <div class="shape circle" style="bottom: 20%; left: 15%;"></div>
+        <div class="shape triangle" style="top: 60%; left: 60%;"></div>
+        <div class="shape square" style="bottom: 30%; right: 40%;"></div>
+    </div>
+
+    <div class="particle-system" id="particles"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo-glow"></div>
+                <div class="logo-icon">🚀</div>
+            </div>
+            <h1>AI Resume Analyzer Pro</h1>
+            <p class="subtitle">Transform Your Career with AI-Powered Insights & Optimization</p>
+        </div>
+
+        <div class="main-content">
+            <div class="card">
+                <h2 style="color: white; margin-bottom: 25px; font-size: 2.2em; font-weight: 700;">📤 Upload Resume</h2>
+                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📄</div>
+                    <div class="upload-text">Drag & Drop Your Resume</div>
+                    <div class="upload-subtext">PDF, DOC, or DOCX • Max 10MB</div>
+                    <input type="file" id="fileInput" style="display: none;" accept=".pdf,.doc,.docx">
+                </div>
+                <button class="btn" onclick="analyzeResume()">
+                    <span style="position: relative; z-index: 1;">🔥 Analyze Now</span>
+                </button>
+            </div>
+
+            <div class="card">
+                <h2 style="color: white; margin-bottom: 35px; font-size: 2.2em; font-weight: 700;">✨ Pro Features</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">📥</div>
+                        <div class="feature-content">
+                            <h3>Corrected PDF Download</h3>
+                            <p>Get AI-fixed resume instantly</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📚</div>
+                        <div class="feature-content">
+                            <h3>Course Recommendations</h3>
+                            <p>Personalized learning paths</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🏢</div>
+                        <div class="feature-content">
+                            <h3>Company ATS Scores</h3>
+                            <p>See how you rank per company</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-content">
+                            <h3>Smart Improvements</h3>
+                            <p>Detailed enhancement tips</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner-container">
+                <div class="spinner"></div>
+                <div class="spinner-inner"></div>
+            </div>
+            <h2>Analyzing Your Resume...</h2>
+            <p style="color: rgba(255,255,255,0.8); font-size: 1.2em;">AI is processing experience, skills & achievements</p>
+        </div>
+
+        <div class="results-section" id="results">
+            <div class="result-card">
+                <h3>📊 Overall Score</h3>
+                <div class="score-display">85/100</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%;"></div>
+                </div>
+                <p style="color: rgba(255,255,255,0.9); text-align: center; margin-top: 20px; font-size: 1.1em;">
+                    Excellent! Minor tweaks will make it perfect.
+                </p>
+                <button class="btn secondary" onclick="downloadCorrectedResume()" style="width: 100%; margin-top: 25px;">
+                    <span style="position: relative; z-index: 1;">📥 Download Corrected Resume</span>
+                </button>
+            </div>
+
+            <div class="result-card">
+                <h3>💡 Key Improvements</h3>
+                <ul class="recommendation-list">
+                    <li><strong>Add Impact Metrics:</strong> Include 3-5 quantifiable achievements (e.g., "Increased sales by 40%")</li>
+                    <li><strong>ATS Keywords:</strong> Add "Agile", "Scrum", "CI/CD", "Cloud Architecture"</li>
+                    <li><strong>Action Verbs:</strong> Replace passive language with "Led", "Architected", "Optimized"</li>
+                    <li><strong>Format Fix:</strong> Use consistent bullet points and spacing</li>
+                </ul>
+            </div>
+
+            <div class="result-card">
+                <h3>📚 Recommended Courses</h3>
+                <div class="course-item" style="animation-delay: 0.4s;">
+                    <h4>Advanced System Design</h4>
+                    <p>Master scalable architecture patterns to boost your senior role prospects</p>
+                    <span class="badge">8 weeks</span>
+                    <span class="badge">Coursera</span>
+                </div>
+                <div class="course-item" style="animation-delay: 0.6s;">
+                    <h4>AWS Solutions Architect</h4>
+                    <p>Get certified in cloud infrastructure - highly valued by top companies</p>
+                    <span class="badge">6 weeks</span>
+                    <span class="badge">AWS Training</span>
+                </div>
+                <div class="course-item" style="animation-delay: 0.8s;">
+                    <h4>Leadership & Management</h4>
+                    <p>Develop skills for tech lead and management positions</p>
+                    <span class="badge">4 weeks</span>
+                    <span class="badge">LinkedIn Learning</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h3>🎯 Career Path Matches</h3>
+                <p style="color: white; margin-bottom: 20px; font-size: 1.1em;">Your best career paths:</p>
+                <div style="background: rgba(74, 222, 128, 0.1); padding: 20px; border-radius: 15px; margin-bottom: 15px; border: 1px solid rgba(74, 222, 128, 0.3);">
+                    <strong style="color: #4ade80; font-size: 1.2em;">Senior Developer</strong>
+                    <div class="progress-bar" style="margin-top: 12px;">
+                        <div class="progress-fill" style="width: 78%;"></div>
+                    </div>
+                    <small style="color: rgba(255,255,255,0.8); font-size: 1em;">78% perfect match</small>
+                </div>
+                <div style="background: rgba(96, 165, 250, 0.1); padding: 20px; border-radius: 15px; border: 1px solid rgba(96, 165, 250, 0.3);">
+                    <strong style="color: #60a5fa; font-size: 1.2em;">Tech Lead</strong>
+                    <div class="progress-bar" style="margin-top: 12px;">
+                        <div class="progress-fill" style="width: 65%; background: linear-gradient(90deg, #60a5fa, #3b82f6, #2563eb);"></div>
+                    </div>
+                    <small style="color: rgba(255,255,255,0.8); font-size: 1em;">65% great match</small>
+                </div>
+            </div>
+
+            <div class="result-card" style="grid-column: span 2;">
+                <h3>🏢 Company-Wise ATS Scores</h3>
+                <p style="color: rgba(255,255,255,0.8); margin-bottom: 25px;">See how your resume performs at top companies:</p>
+                
+                <div class="company-score" style="animation-delay: 0.4s;">
+                    <div class="company-header">
+                        <span class="company-name">🔵 Google</span>
+                        <span class="company-score-value">92/100</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 92%; background: linear-gradient(90deg, #4285f4, #34a853);"></div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-top: 10px;">
+                        ✅ Excellent match! Add "Machine Learning" and "Distributed Systems" keywords.
+                    </p>
+                </div>
+
+                <div class="company-score" style="animation-delay: 0.6s;">
+                    <div class="company-header">
+                        <span class="company-name">🟠 Amazon</span>
+                        <span class="company-score-value">88/100</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 88%; background: linear-gradient(90deg, #ff9900, #ff6600);"></div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-top: 10px;">
+                        ✅ Strong candidate! Emphasize "Customer Obsession" and "Ownership" principles.
+                    </p>
+                </div>
+
+                <div class="company-score" style="animation-delay: 0.8s;">
+                    <div class="company-header">
+                        <span class="company-name">🔷 Microsoft</span>
+                        <span class="company-score-value">85/100</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #00a4ef, #0078d4);"></div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-top: 10px;">
+                        ✅ Very good! Add "Azure" and "DevOps" experience to boost your score.
+                    </p>
+                </div>
+
+                <div class="company-score" style="animation-delay: 1s;">
+                    <div class="company-header">
+                        <span class="company-name">⚫ Meta</span>
+                        <span class="company-score-value">79/100</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 79%; background: linear-gradient(90deg, #0668e1, #1877f2);"></div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-top: 10px;">
+                        ⚠️ Good start! Highlight "React", "GraphQL", and "Mobile Development" skills.
+                    </p>
+                </div>
+
+                <div class="company-score" style="animation-delay: 1.2s;">
+                    <div class="company-header">
+                        <span class="company-name">🟣 Netflix</span>
+                        <span class="company-score-value">82/100</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 82%; background: linear-gradient(90deg, #e50914, #b20710);"></div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-top: 10px;">
+                        ✅ Solid match! Emphasize "Microservices" and "A/B Testing" experience.
+                    </p>
+                </div>
+
+                <div class="company-score" style="animation-delay: 1.4s;">
+                    <div class="company-header">
+                        <span class="company-name">🟢 Nvidia</span>
+                        <span class="company-score-value">76/100</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 76%; background: linear-gradient(90deg, #76b900, #5a9100);"></div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.95em; margin-top: 10px;">
+                        ⚠️ Competitive! Add "CUDA", "GPU Programming", and "Deep Learning" expertise.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate floating particles
+        const particleSystem = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'particle-dot';
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.animationDelay = Math.random() * 15 + 's';
+            dot.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particleSystem.appendChild(dot);
+        }
+
+        let uploadedFile = null;
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.querySelector('.upload-area');
+        const uploadText = document.querySelector('.upload-text');
+
+        fileInput.onchange = e => {
+            uploadedFile = e.target.files[0];
+            if (uploadedFile) {
+                uploadText.innerHTML = '✅ ' + uploadedFile.name;
+                uploadText.style.color = '#4ade80';
+            }
+        };
+
+        uploadArea.ondragover = e => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#667eea';
+            uploadArea.style.transform = 'scale(1.05)';
+        };
+
+        uploadArea.ondragleave = () => {
+            uploadArea.style.borderColor = 'rgba(255,255,255,0.3)';
+            uploadArea.style.transform = 'scale(1)';
+        };
+
+        uploadArea.ondrop = e => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'rgba(255,255,255,0.3)';
+            uploadArea.style.transform = 'scale(1)';
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                uploadedFile = files[0];
+                uploadText.innerHTML = '✅ ' + uploadedFile.name;
+                uploadText.style.color = '#4ade80';
+            }
+        };
+
+        function analyzeResume() {
+            if (!uploadedFile) {
+                alert('⚠️ Please upload a resume first!');
+                return;
+            }
+            document.querySelector('.main-content').style.display = 'none';
+            document.getElementById('loading').classList.add('active');
+            setTimeout(() => {
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('results').classList.add('active');
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            }, 3500);
+        }
+
+        function downloadCorrectedResume() {
+            // Simulate PDF download
+            const link = document.createElement('a');
+            link.href = '#';
+            link.download = 'Corrected_Resume.pdf';
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #4ade80, #22c55e);
+                color: white;
+                padding: 30px 50px;
+                border-radius: 20px;
+                font-size: 1.3em;
+                font-weight: 700;
+                box-shadow: 0 20px 60px rgba(74, 222, 128, 0.5);
+                z-index: 10000;
+                animation: scaleIn 0.5s;
+            `;
+            notification.innerHTML = '✅ Corrected Resume Downloaded!<br><small style="font-size: 0.7em; font-weight: 400; opacity: 0.9;">Check your downloads folder</small>';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'scaleIn 0.5s reverse';
+                setTimeout(() => notification.remove(), 500);
+            }, 2500);
+        }
+
+        // Add mouse parallax effect to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-20px) scale(1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
